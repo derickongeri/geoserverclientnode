@@ -1,16 +1,37 @@
+const { convertToWK } = require("wkt-parser-helper");
+const grcImport = require("geoserver-node-client");
+const GeoServerRestClient = grcImport.GeoServerRestClient;
+
+const url = "http://78.141.234.158/geoserver/rest/";
+const user = "admin";
+const pw = "geoserver";
+const ws = "Mislanddata";
+const grc = new GeoServerRestClient(url, user, pw);
+
 const geoserverClip = async function (gemetryJSON, vectName) {
     try {
       // function prettyJson(obj) {
       //   return JSON.stringify(obj, null, 2);
       // }
+      // console.log(gemetryJSON )
   
       const parsed = JSON.parse(JSON.stringify(gemetryJSON));
+
+
   
       let wktVector = convertToWK(parsed);
+
+      console.log(wktVector )
+
+      let sldName = ""
   
       //console.log(wktVector)
-  
-      let sldName = "lulc" + vectName.replace(/ /g, "_");
+      if(vectName !== 'Polygon'){
+        sldName = "lulc" + vectName.replace(/ /g, "_");
+      }else{
+        sldName = 'lulc' + Math.floor((Math.random() * 1000000) + 1);
+      }
+      
   
       const publishedSLDs = await grc.styles.getAllWorkspaceStyles()
       console.log(publishedSLDs)
@@ -82,3 +103,7 @@ const geoserverClip = async function (gemetryJSON, vectName) {
       console.error(error);
     }
   };
+
+  module.exports = {
+    geoserverClip
+  }

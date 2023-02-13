@@ -1,16 +1,25 @@
 // require packages used in the project
 const express = require('express')
 const cors = require('cors')
+var bodyParser = require('body-parser')
 const app = express()
-const port = 8600
+const port = 3000
 
-const midware = require("./gsnodeclient");
+const {clipRaster, clipRasterCustomGeometry} = require("./gsnodeclient");
 
 // const zonalStats = require('./geoserverWPS')
 
 app.use(cors())
 
-app.use('/api/rasters/lulc/crop/shape',midware);
+var jsonParser = bodyParser.json()
+
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+app.use('/api/rasters/lulc/crop/shape',clipRaster);
+
+app.post('/api/rasters/lulc/cropcustom', [jsonParser,clipRasterCustomGeometry] , (req, res) => {
+ 
+})
 
 // app.use('/api/rasters/stats', zonalStats)
 
