@@ -67,7 +67,10 @@
         });
         // const overlay = new ee.layers.ImageOverlay(tileSource);
         //     embeddedMap.overlayMapTypes.push(overlay);
-        var map = L.map("map-container").setView([32.42, -116.52], 4);
+        var map = L.map("map-container").setView(
+          [-0.3153161577707806, 36.61303164776024],
+          18
+        );
 
         //tileSource.addTo(map);
 
@@ -92,10 +95,21 @@
         );
 
         eeLayer.addTo(map).bringToFront();
+
+        // L.tileLayer
+        //   .wms("http://78.141.234.158/geoserver/Prisca/wms", {
+        //     layers: `Prisca:JKUAT`,
+        //     format: "image/png",
+        //     transparent: "true",
+        //     tilematrixSet: "EPSG:4326",
+        //     styles: `Prisca:JKUAT_style`,
+        //     crs: L.CRS.EPSG4326,
+        //   })
+        //   .addTo(map).bringToFront();
       };
       // Nuevo mapa
       // Fetch a valid mapid from the remote web service defined in server.js.
-      fetch("http://127.0.0.1:3000/mapid")
+      fetch("http://127.0.0.1:3000/api/mapid")
         .then((response) => response.text())
         .then((mapid) => initialize(mapid));
     </script>

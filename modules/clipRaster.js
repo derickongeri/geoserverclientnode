@@ -13,15 +13,15 @@ const geoserverClip = async function (gemetryJSON, vectName) {
       // function prettyJson(obj) {
       //   return JSON.stringify(obj, null, 2);
       // }
-      // console.log(gemetryJSON )
+      console.log(gemetryJSON )
   
       const parsed = JSON.parse(JSON.stringify(gemetryJSON));
 
-
+      console.log(parsed)
   
       let wktVector = convertToWK(parsed);
 
-      console.log(wktVector )
+      // console.log(wktVector )
 
       let sldName = ""
   
@@ -34,7 +34,7 @@ const geoserverClip = async function (gemetryJSON, vectName) {
       
   
       const publishedSLDs = await grc.styles.getAllWorkspaceStyles()
-      console.log(publishedSLDs)
+      //console.log(publishedSLDs)
       const matchingSld = publishedSLDs.find((d) => d.name === sldName)
   
       if(!matchingSld){
