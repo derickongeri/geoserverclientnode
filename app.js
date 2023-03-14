@@ -9,7 +9,7 @@ const app = express();
 const port = 3000;
 
 const { clipRaster, clipRasterCustomGeometry } = require("./gsnodeclient");
-const { initializeGee, getGeeRaster } = require("./modules/geeScript");
+const { getGeeRaster, getEEstats } = require("./modules/geeScript");
 
 // const zonalStats = require('./geoserverWPS')
 
@@ -28,7 +28,11 @@ app.post(
 );
 
 // Define endpoint at /mapid
-app.post("/api/mapid", [jsonParser, initializeGee]);
+app.post("/api/mapid", [jsonParser, getGeeRaster]);
+
+app.get("/api/mapid", [jsonParser, getGeeRaster]);
+
+app.post("/api/stats", [jsonParser, getEEstats]);
 
 console.log("Authenticating Earth Engine API using private key...");
 ee.data.authenticateViaPrivateKey(
