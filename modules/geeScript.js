@@ -114,9 +114,9 @@ const getGeeRaster = async (req, res) => {
   var sld_intervals =
     "<RasterSymbolizer>" +
     '<ColorMap type="intervals" extended="false" >' +
-    '<ColorMapEntry color="#ffffff" quantity="-500" label="-500" />' +
-    '<ColorMapEntry color="#7a8737" quantity="-250" label="-250" />' +
-    '<ColorMapEntry color="#acbe4d" quantity="-100" label="-100" />' +
+    '<ColorMapEntry color="#ffffff" quantity="-500" label="-500"  />' +
+    '<ColorMapEntry color="#7a8737" quantity="-250" label="-250"  />' +
+    '<ColorMapEntry color="#acbe4d" quantity="-100" label="-100"  />' +
     '<ColorMapEntry color="#0ae042" quantity="100" label="100" />' +
     '<ColorMapEntry color="#fff70b" quantity="270" label="270" />' +
     '<ColorMapEntry color="#ffaf38" quantity="440" label="440" />' +
@@ -213,7 +213,7 @@ const getEEstats = async (req, res) => {
     ];
 
     // execute function for each class
-    for (var i = 0; i < 8; i++) {
+    for (var i = 1; i < 5; i++) {
       areacount(i, names2[i]);
     }
 
