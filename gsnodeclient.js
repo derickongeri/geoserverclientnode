@@ -19,3 +19,4 @@ module.exports = {
   clipRaster,
   clipRasterCustomGeometry
 }
+

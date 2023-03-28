@@ -177,16 +177,16 @@ const getEEstats = async (req, res) => {
 
     // create a function to derive extent of one burn severity class
     // arguments are class number and class name
-    var areacount = function (cnr, name) {
+    var areacount = function (cnr, name, pallete) {
       var singleMask = classified.updateMask(classified.eq(cnr)); // mask a single class
 
       var stats = singleMask.reduceRegion({
         reducer: ee.Reducer.count(), // count pixels in a single class
         geometry: area,
-        scale: 30,
+        scale: 10,
       });
       var pix = ee.Number(stats.get("sum"));
-      // var hect = pix.multiply(900).divide(10000); // Landsat pixel = 30m x 30m --> 900 sqm
+      var hect = pix.multiply(100).divide(10000); // Landsat pixel = 30m x 30m --> 900 sqm
       // var perc = pix
       //   .divide(allpixels)
       //   .multiply(10000)
@@ -195,7 +195,8 @@ const getEEstats = async (req, res) => {
       arealist.push({
         Class: name,
         Pixels: pix.getInfo(),
-        // Hectares: hect.getInfo(),
+        color: pallete,
+        Hectares: hect.getInfo(),
         // Percentage: perc.getInfo(),
       });
     };
@@ -203,18 +204,31 @@ const getEEstats = async (req, res) => {
     // severity classes in different order
     var names2 = [
       "NA",
-      "High Severity",
-      "Moderate-high Severity",
-      "Moderate-low Severity",
-      "Low Severity",
+      "Very High",
+      "High",
+      "Moderate",
+      "Low",
       "Unburned",
       "Enhanced Regrowth, Low",
       "Enhanced Regrowth, High",
     ];
 
+    let colorPallete = [
+      "#7a8737",
+      "#acbe4d",
+      "#0ae042",
+      "#fff70b",
+      "#ffaf38",
+      "#ff641b",
+      "#a41fd6",
+      "#ffffff",
+    ];
+
+    colorPallete = colorPallete.reverse();
+
     // execute function for each class
     for (var i = 1; i < 5; i++) {
-      areacount(i, names2[i]);
+      areacount(i, names2[i], colorPallete[i]);
     }
 
     console.log(
